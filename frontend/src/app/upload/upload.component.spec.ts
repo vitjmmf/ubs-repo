@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import {MatIconModule} from '@angular/material/icon';
+
 import { UploadComponent } from './upload.component';
 
 describe('UploadComponent', () => {
