@@ -1,7 +1,6 @@
-package br.sp.gov.fatec.ubs.model;
+package br.sp.gov.fatec.ubs.backend.model;
 
-import ch.qos.logback.core.joran.spi.NoAutoStart;
-import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,19 +10,30 @@ import jakarta.persistence.Id;
 public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codigo;
+    private long id;
     private String nome;
+    
+    @Column(unique=true)
+    private String cpf;
 
-    public long getCodigo() {
-        return codigo;
+    public long getId() {
+        return id;
     }
 
-    public void setCodigo(long codigo) {
-        this.codigo = codigo;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setNome(String nome) {

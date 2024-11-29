@@ -1,6 +1,8 @@
-package br.sp.gov.fatec.ubs.model;
+package br.sp.gov.fatec.ubs.backend.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
 @CrossOrigin(origins="*")
-@RequestMapping("/paciente")
 @RestController
+@RequestMapping({"/pacientes"})
 public class PacienteController {
     @Autowired
     PacienteRepository bd;
@@ -30,8 +34,14 @@ public class PacienteController {
     }
 
     @PostMapping
-    public Paciente cadastrarPaciente(Paciente paciente){
-        return bd.save(paciente);
+    public ResponseEntity<?> cadastrarPaciente(@RequestBody Paciente paciente){
+        try {
+            bd.save(paciente);
+            return new ResponseEntity<>(paciente, HttpStatus.OK);
+        } catch (Exception e) {
+            Paciente pac = bd.buscaPorNomeOuCpf("", paciente.getCpf()).get(0);
+            return new ResponseEntity<>(pac, HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping(value="/{idPaciente}")
@@ -40,7 +50,7 @@ public class PacienteController {
             record.setNome(paciente.getNome());
             return bd.save(record);
         }).orElseGet(()->{
-            paciente.setCodigo(id);
+            paciente.setId(id);
             return bd.save(paciente);
         }
         );
