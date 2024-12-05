@@ -1,10 +1,10 @@
 export class Paciente {
-    public codigo: number = 0;
-    public nomeCompleto: string = "";
-    public nomeSocial: string = "";
+    public id: number = 0;
+    public nome: string = "";
+    public cpf: string = "";
     public nomeMae: string = "";
     public nomePai: string = "";
-    public dataNascimento: Date = new Date();
+    public dataNasc = new Date;
     public sexo: string = "";
     public nacionalidade: string = "";
     public municipioNascimento: string = "";
@@ -20,8 +20,6 @@ export class Paciente {
     public contatoResidencial: string = "";
     public contatoComercial: string = "";
     public contatoEmail: string = "";
+    public rg: string = "";
     public origemEndereco: string = "";
-    public dadosEndereco: string = "";
-    public cpf: string = "";
-    public identidade: string = "";
 }
