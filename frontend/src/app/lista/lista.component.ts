@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Paciente } from '../model/paciente';
+import { PacienteService } from '../service/paciente.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lista',

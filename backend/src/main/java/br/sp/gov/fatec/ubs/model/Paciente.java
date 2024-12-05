@@ -2,6 +2,7 @@ package br.sp.gov.fatec.ubs.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Paciente {
     private String nacionalidade;
     private String municipioNascimento;
     private String racaCor;
-    private boolean frequentaEscola;
+    private String frequentaEscola;
     private String escolaridade;
     private String situacaoFamiliar;
     private String vinculoEstabelecido;
@@ -34,8 +35,10 @@ public class Paciente {
     private String contatoEmail;
     private String origemEndereco;
     private String dadosEndereco;
-    private String cpf;
     private String identidade;
+    @Column(unique = true)
+    private String cpf;
+    
  
     public long getCodigo() {
         return codigo;
@@ -117,11 +120,11 @@ public class Paciente {
         this.racaCor = racaCor;
     }
  
-    public boolean isFrequentaEscola() {
+    public String isFrequentaEscola() {
         return frequentaEscola;
     }
  
-    public void setFrequentaEscola(boolean frequentaEscola) {
+    public void setFrequentaEscola(String frequentaEscola) {
         this.frequentaEscola = frequentaEscola;
     }
  
