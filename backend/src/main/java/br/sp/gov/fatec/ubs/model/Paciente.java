@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codigo;
+    private long id;
     private String nomeCompleto;
     private String nomeSocial;
     private String nomeMae;
@@ -38,16 +38,7 @@ public class Paciente {
     private String identidade;
     @Column(unique = true)
     private String cpf;
-    
- 
-    public long getCodigo() {
-        return codigo;
-    }
- 
-    public void setCodigo(long codigo) {
-        this.codigo = codigo;
-    }
- 
+     
     public String getNomeCompleto() {
         return nomeCompleto;
     }
@@ -238,5 +229,13 @@ public class Paciente {
  
     public void setIdentidade(String identidade) {
         this.identidade = identidade;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

@@ -1,9 +1,8 @@
 package br.sp.gov.fatec.ubs.model;
  
-import java.util.List;
-import java.util.Optional;
- 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,43 +21,45 @@ public class PacienteController {
     PacienteRepository bd;
  
     @PostMapping
-    public String gravar(@RequestBody Paciente obj){
-        bd.save(obj);
-        return "Paciente gravado com sucesso!";
-    }
- 
-    @GetMapping({"codigo"})
-    public Paciente ler(@PathVariable Long codigo){
-        Optional<Paciente> obj = bd.findById(codigo);
-        if(obj.isPresent()){
-            return obj.get();
-        } else {
-            return null;
+    public ResponseEntity<?> gravar(@RequestBody Paciente obj){
+        try {
+            bd.save(obj);
+            return new ResponseEntity<>(obj, HttpStatus.OK);
+        } catch (Exception e) {
+            Paciente pac = bd.buscaPorNomeOuCpf("", obj.getCpf()).get(0);
+            return new ResponseEntity<>(pac, HttpStatus.CONFLICT);
         }
     }
  
-    @DeleteMapping({"codigo"})
-    public String remover(@PathVariable Long codigo){
-        bd.deleteById(codigo);
-        return "paciente "+ codigo +" removido com sucesso !!";
-    }
-   
-    @PutMapping
-    public String alterar(@RequestBody Paciente obj){
-        bd.save(obj);
-        return "Paciente alterada com sucesso !";
-    }    
- 
     @GetMapping
-    public List<Paciente> listar(){
+    public Iterable<Paciente> buscarPacientes(){
         return bd.findAll();
     }
- 
-    @GetMapping
-    public List<Paciente> fazerBusca(@PathVariable String palavra){
-        return bd.fazerBusca('%'+ palavra +'%');
+
+    @GetMapping("/{idPaciente}")
+    public Paciente ler(@PathVariable Long idPaciente){
+        return bd.findById(idPaciente).get();
     }
- 
+
+    @PutMapping(value="/{idPaciente}")
+    public Paciente alterar(@PathVariable("idPaciente") long id, @RequestBody Paciente obj){
+        return bd.findById(id).map(record->{
+            record.setNomeCompleto(obj.getNomeCompleto());
+            return bd.save(record);
+        }).orElseGet(()->{
+            obj.setId(id);
+            return bd.save(obj);
+        }
+        );
+    }
+
+    @DeleteMapping(path="/{idPaciente}")
+    public ResponseEntity<?> delete(@PathVariable("idPaciente") long id){
+        return bd.findById(id).map(record->{
+            bd.deleteById(id);
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
  
  
 }

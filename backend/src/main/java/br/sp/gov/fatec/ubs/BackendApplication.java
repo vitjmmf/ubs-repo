@@ -1,4 +1,4 @@
-package br.sp.gov.fatec.ubs.backend;
+package br.sp.gov.fatec.ubs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
