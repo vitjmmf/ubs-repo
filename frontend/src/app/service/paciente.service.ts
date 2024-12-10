@@ -13,16 +13,16 @@ export class PacienteService {
   constructor(private http: HttpClient) { }
 
   public salvar(obj: Paciente): Observable<Paciente> {
-    return this.http.post<Paciente>('http://localhost:8087/pacientes', obj);
+    return this.http.post<Paciente>('http://localhost:8087/paciente', obj);
   }
   public alterar(obj: Paciente): Observable<Paciente> {
-    return this.http.put<Paciente>('http://localhost:8087/pacientes/', obj);
+    return this.http.put<Paciente>('http://localhost:8087/paciente/', obj);
   }
   public excluir(id: number): Observable<Paciente> {
-    return this.http.delete<Paciente>('http://localhost:8087/pacientes/' + id);
+    return this.http.delete<Paciente>('http://localhost:8087/paciente/' + id);
   }
   public listarTodos(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>('http://localhost:8087/pacientes');
+    return this.http.get<Paciente[]>('http://localhost:8087/paciente');
   }
 
 
