@@ -49,10 +49,18 @@ constructor(private service: PacienteService){
     });
   }
 
-  busca(pa)
+  busca(paciente: Paciente){
+    this.service.buscarPorNome(paciente.nome).subscribe({
+      next: (data) => {this.paciente = data;},
+      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar buscar pacientes pelo nome!";}
+    });
+  }
 
-  novoPaciente(){
-    this.mensagem = "";
+  buscaNomeCpf(paciente: Paciente){
+    this.service.buscaNomeCpf(paciente.cpf, paciente.nome).subscribe({
+      next: (data) => {this.paciente = data;},
+      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar buscar pacientes pelo CPF!";}
+    });
   }
 }
 

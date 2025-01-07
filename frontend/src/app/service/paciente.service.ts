@@ -24,6 +24,12 @@ export class PacienteService {
   public listarTodos(): Observable<Paciente[]> {
     return this.http.get<Paciente[]>('http://localhost:8087/paciente');
   }
+  public buscarPorNome(nome: string): Observable<Paciente> {
+    return this.http.get<Paciente>('http://localhost:8087/paciente/');
+  }
+  public buscaNomeCpf(nome: string, cpf: string): Observable<Paciente>{
+    return this.http.get<Paciente>('http://localhost:8087/paciente/');
+  }
 
 
 }

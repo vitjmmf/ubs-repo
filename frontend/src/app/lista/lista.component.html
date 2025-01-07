@@ -1,7 +1,47 @@
+<link rel="stylesheet" href="lista.component.css">
 <p></p>
 <h4>{{mensagem}}</h4>
-<div *ngFor="let paciente of pacientes">
-    <b>{{paciente.nome}}</b><br>
-    <b>{{paciente.cpf}}</b><br>
-    <b>{{paciente.id}}</b><br><br>
+
+<div>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" [(ngModel)]="nome" />
+
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" [(ngModel)]="cpf" />
+
+    <button (click)="buscarPorNome()">Buscar por Nome</button>
+    <button (click)="buscarPorNomeOuCpf()">Buscar por Nome ou CPF</button>
+  </div>
+
+  <div *ngIf="pacientes.length">
+    <h3>Resultados:</h3>
+    <ul>
+      <li *ngFor="let paciente of pacientes">
+        {{ paciente.nome }} - {{ paciente.cpf }}
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!pacientes.length">
+    <p>Nenhum paciente encontrado.</p>
+  </div>
+  
+<div *ngFor="let paciente of pacientes" class="paciente-card">
+    <div class="paciente-info">
+        <div class="paciente-field">
+            <span class="label">Nome:</span>
+            <span class="value">{{paciente.nome}}</span>
+        </div>
+        <div class="paciente-field">
+            <span class="label">CPF:</span>
+            <span class="value">{{paciente.cpf}}</span>
+        </div>
+        <div class="paciente-field">
+            <span class="label">ID:</span>
+            <span class="value">{{paciente.id}}</span>
+        </div>
+    </div>
+    <div class="paciente-actions">
+        <button class="btn editar" (click)="excluir();">Excluir</button>
+        <button class="btn excluir" (click)="editar();">Alterar</button>
+    </div>
 </div>

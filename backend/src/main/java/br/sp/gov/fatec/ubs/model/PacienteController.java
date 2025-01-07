@@ -1,5 +1,6 @@
 package br.sp.gov.fatec.ubs.model;
- 
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -59,6 +61,16 @@ public class PacienteController {
             bd.deleteById(id);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public List<Paciente> buscaPorNome(@RequestParam String nome){
+        return bd.buscaPorNome(nome);
+    }
+
+    @GetMapping
+    public List<Paciente> buscaPorNomeOuCpf(@RequestParam String nome, @RequestParam String cpf){
+        return bd.buscaPorNomeOuCpf(nome, cpf);
     }
  
  
