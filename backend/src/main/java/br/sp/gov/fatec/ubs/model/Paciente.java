@@ -14,8 +14,12 @@ public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column
     private String nomeCompleto;
+    @Column
     private String nomeSocial;
+    @Column
     private String nomeMae;
     private String nomePai;
     private LocalDate dataNascimento;
