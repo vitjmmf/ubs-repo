@@ -1,6 +1,7 @@
 package br.sp.gov.fatec.ubs.model;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class PacienteController {
     }
 
     @GetMapping("/{idPaciente}")
-    public Paciente ler(@PathVariable Long idPaciente){
+    public Paciente buscarPacientePorId(@PathVariable Long idPaciente){
         return bd.findById(idPaciente).get();
     }
 

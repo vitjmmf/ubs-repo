@@ -17,14 +17,13 @@ export class ListaComponent {
   mensagem: String = "";
   pacientes: Paciente[] = [];
   paciente: Paciente = new Paciente;
+  selecionarPaciente: Paciente | null = null;
   id: number = 0;
 
 
 
 constructor(private service: PacienteService){
   this.listarPacientes();
-  this.excluir(this.id);
-  this.editar(this.paciente);
 
   }
 
@@ -37,30 +36,32 @@ constructor(private service: PacienteService){
 
   excluir(id: number){
     this.service.excluir(id).subscribe({
-      next: (data) => {this.listarPacientes(); this.mensagem = "Paciente excluído com sucesso!";},
-      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar excluir o paciente!";}
+      next: () => {this.listarPacientes(); this.mensagem = "Paciente excluído com sucesso!";},
+      error: (err) => {this.mensagem = "ocorreu um erro ao tentar excluir o paciente!";}
     });
   }
 
   editar(paciente: Paciente){
-    this.service.alterar(paciente).subscribe({
-      next: (data) => {this.listarPacientes(); this.mensagem = "Paciente alterado com sucesso!";},
-      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar alterar o paciente!";}
-    });
+    this.selecionarPaciente = {...paciente};
   }
 
-  busca(paciente: Paciente){
-    this.service.buscarPorNome(paciente.nome).subscribe({
-      next: (data) => {this.paciente = data;},
-      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar buscar pacientes pelo nome!";}
-    });
+  salvar() {
+    if (this.selecionarPaciente) {
+      this.service.salvar(this.selecionarPaciente).subscribe({
+        next: (response) => {
+          this.listarPacientes();
+          this.mensagem = 'Atualizado com sucesso!';
+        },
+        error: (err) => {
+          this.mensagem = 'Erro ao salvar o paciente.';
+        }
+      });
+    }
   }
 
-  buscaNomeCpf(paciente: Paciente){
-    this.service.buscaNomeCpf(paciente.cpf, paciente.nome).subscribe({
-      next: (data) => {this.paciente = data;},
-      error: (msg) => {this.mensagem = "ocorreu um erro ao tentar buscar pacientes pelo CPF!";}
-    });
+  limparSelecao() {
+    this.selecionarPaciente = null;
   }
+
 }
 
