@@ -15,7 +15,7 @@ import { PacienteService } from '../service/paciente.service';
 export class ListaComponent {
   mensagem: string = '';
   pacientes: Paciente[] = [];
-  Selecionado: Paciente | null = null:
+  selecionado: Paciente | null = null;
 
   constructor(private service: PacienteService) {
     this.listarPacientes();
@@ -33,12 +33,12 @@ export class ListaComponent {
   }
 
   editar(paciente: Paciente) {
-    this.Selecionado = { ...paciente };
+    this.selecionado = { ...paciente };
   }
 
   salvar() {
-    if (this.Selecionado) {
-      this.service.salvar(this.Selecionado).subscribe({
+    if (this.selecionado) {
+      this.service.salvar(this.selecionado).subscribe({
         next: (response) => {
           this.mensagem = 'Paciente atualizado com sucesso!';
           this.listarPacientes();
@@ -52,7 +52,7 @@ export class ListaComponent {
   }
 
   cancelarEdicao() {
-    this.Selecionado = null;
+    this.selecionado = null;
   }
 
   excluir(paciente: Paciente) {
