@@ -45,7 +45,7 @@ export class ListaComponent {
           this.cancelarEdicao();
         },
         error: (err) => {
-          this.mensagem = 'Erro ao salvar o paciente.';
+          this.mensagem = 'Erro ao salvar alterações.';
         }
       });
     }
