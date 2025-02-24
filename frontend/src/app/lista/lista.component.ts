@@ -15,6 +15,8 @@ import { PacienteService } from '../service/paciente.service';
 export class ListaComponent {
   mensagem: string = '';
   pacientes: Paciente[] = [];
+  pacientesFiltrados: Paciente[] = [];
+  filtro: string = '';
   selecionado: Paciente | null = null;
 
   constructor(private service: PacienteService) {
@@ -30,6 +32,17 @@ export class ListaComponent {
         this.mensagem = 'Ocorreu um erro ao carregar os pacientes.';
       }
     });
+  }
+
+  filtrarPacientes() {
+    if (this.filtro === '') {
+      this.pacientesFiltrados = this.pacientes;
+    } else {
+      this.pacientesFiltrados = this.pacientes.filter(paciente =>
+        paciente.nome.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        paciente.cpf.includes(this.filtro)
+      );
+    }
   }
 
   editar(paciente: Paciente) {
