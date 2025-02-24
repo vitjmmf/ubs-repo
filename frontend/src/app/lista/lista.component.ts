@@ -18,6 +18,8 @@ export class ListaComponent {
   pacientes: Paciente[] = [];
   paciente: Paciente = new Paciente;
   selecionarPaciente: Paciente | null = null;
+  pacientesFiltrados: Paciente[] = [];
+  filtro: string = '';
   id: number = 0;
 
 
@@ -32,6 +34,17 @@ constructor(private service: PacienteService){
       next: (data) =>{this.pacientes = data;},
       error: (msg) =>{this.mensagem = "ocorreu erro"}
     });
+  }
+
+  filtrarPacientes() {
+    if (this.filtro === '') {
+      this.pacientesFiltrados = this.pacientes;
+    } else {
+      this.pacientesFiltrados = this.pacientes.filter(paciente =>
+        paciente.nome.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        paciente.cpf.includes(this.filtro)
+      );
+    }
   }
 
   excluir(id: number){

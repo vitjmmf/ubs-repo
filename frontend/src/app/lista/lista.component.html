@@ -4,6 +4,12 @@
     <div class="card-header bg-dark text-white">
       <h5 class="mb-0">Resultados da Pesquisa</h5>
     </div>
+
+    <div class="form-group">
+      <label for="buscar" class="font-weight-bold">Buscar Paciente:</label>
+      <input type="text" id="buscar" class="form-control" [(ngModel)]="filtro" (input)="filtrarPacientes()" placeholder="Digite o nome ou CPF para buscar...">
+  </div>
+
     <div class="card-body">
       <table class="table table-striped table-hover">
         <thead>
